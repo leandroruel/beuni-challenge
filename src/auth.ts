@@ -30,4 +30,4 @@ export const auth = betterAuth({
   }),
 });
 
-console.log(auth)
+console.log(auth);
