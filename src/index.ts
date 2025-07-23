@@ -1,0 +1,32 @@
+import Fastify from "fastify";
+import process from "node:process";
+import fastifyCors from "@fastify/cors";
+import { registerAuthRoutes } from "./features/auth/routes.ts";
+
+const fastify = Fastify({ logger: true });
+
+await fastify.register(fastifyCors, {
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  credentials: true,
+  maxAge: 86400,
+});
+
+await registerAuthRoutes(fastify);
+
+fastify.get("/", async (request, reply) => {
+  return { hello: "world" };
+});
+
+const start = async () => {
+  try {
+    await fastify.listen({ port: 3000, host: "0.0.0.0" });
+    fastify.log.info(`Server running in http://localhost:3000`);
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();

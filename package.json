@@ -1,0 +1,49 @@
+{
+  "name": "beuni-challenge",
+  "version": "1.0.0",
+  "description": "a code challenge for beuni",
+  "keywords": [
+    "node",
+    "front"
+  ],
+  "homepage": "https://github.com/leandroruel/beuni-challenge#readme",
+  "bugs": {
+    "url": "https://github.com/leandroruel/beuni-challenge/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leandroruel/beuni-challenge.git"
+  },
+  "license": "ISC",
+  "author": "leandroruel",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "tsx src/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "format": "biome format --write"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.0.1",
+    "bcryptjs": "^2.4.3",
+    "better-auth": "^1.2.12",
+    "dotenv": "^17.2.0",
+    "drizzle-orm": "^0.44.3",
+    "fastify": "^5.4.0",
+    "pg": "^8.16.3",
+    "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.11.30",
+    "@types/pg": "^8.15.4",
+    "drizzle-kit": "^0.31.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}
