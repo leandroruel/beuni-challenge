@@ -1,4 +1,11 @@
-import { pgTable, text, boolean, timestamp } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  boolean,
+  timestamp,
+  integer,
+} from "drizzle-orm/pg-core";
+import { company } from "./company.ts";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -8,6 +15,9 @@ export const user = pgTable("user", {
     .$defaultFn(() => false)
     .notNull(),
   image: text("image"),
+  companyId: integer("company_id").references(() => company.id, {
+    onDelete: "cascade",
+  }),
   createdAt: timestamp("created_at")
     .$defaultFn(() => new Date())
     .notNull(),
