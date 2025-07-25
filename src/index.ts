@@ -2,6 +2,8 @@ import Fastify from "fastify";
 import process from "node:process";
 import fastifyCors from "@fastify/cors";
 import { registerAuthRoutes } from "./features/auth/routes.ts";
+import { registerKitRoutes } from "./features/kit/route.ts";
+import { registerCompanyRoutes } from "./features/company/route.ts";
 
 const fastify = Fastify({ logger: true });
 
@@ -14,6 +16,8 @@ await fastify.register(fastifyCors, {
 });
 
 await registerAuthRoutes(fastify);
+await registerKitRoutes(fastify);
+await registerCompanyRoutes(fastify);
 
 fastify.get("/", async (request, reply) => {
   return { hello: "world" };
