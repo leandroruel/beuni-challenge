@@ -7,6 +7,7 @@ import {
   getEmployeeById,
   deleteEmployee,
 } from "./service.ts";
+import { ERROR_CODES } from "../../utils/constants.ts";
 
 /**
  * @description Creates a new employee.
@@ -80,16 +81,24 @@ export const getAll = async (request: FastifyRequest, reply: FastifyReply) => {
  * @returns The employee object or error if not found.
  */
 export const getById = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { id } = request.params as { id: number };
+  const { id: idParam } = request.params as { id: string };
+  const id = parseInt(idParam, 10);
 
-  if (!id) {
-    return reply.status(400).send({ error: "ID is required" });
+  if (isNaN(id)) {
+    return reply
+      .status(400)
+      .send({ error: "Invalid ID parameter", code: ERROR_CODES.INVALID_ID });
   }
 
   const employee = await getEmployeeById(id);
 
   if (!employee) {
-    return reply.status(404).send({ error: "Employee not found" });
+    return reply
+      .status(404)
+      .send({
+        error: "Employee not found",
+        code: ERROR_CODES.EMPLOYEE_NOT_FOUND,
+      });
   }
 
   return reply.send(employee);
@@ -103,16 +112,30 @@ export const getById = async (request: FastifyRequest, reply: FastifyReply) => {
  * @returns A success message and the deleted employee object, or error if not found.
  */
 export const destroy = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { id } = request.params as { id: number };
+  const { id: idParam } = request.params as { id: string };
+  const id = parseInt(idParam, 10);
 
   if (!id) {
-    return reply.status(400).send({ error: "ID is required" });
+    return reply
+      .status(400)
+      .send({ error: "ID is required", code: ERROR_CODES.INVALID_ID });
+  }
+
+  if (isNaN(id)) {
+    return reply
+      .status(400)
+      .send({ error: "Invalid ID parameter", code: ERROR_CODES.INVALID_ID });
   }
 
   const deletedEmployee = await deleteEmployee(id);
 
   if (!deletedEmployee) {
-    return reply.status(404).send({ error: "Employee not found" });
+    return reply
+      .status(404)
+      .send({
+        error: "Employee not found",
+        code: ERROR_CODES.EMPLOYEE_NOT_FOUND,
+      });
   }
 
   return reply.send({
