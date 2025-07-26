@@ -5,5 +5,9 @@ export const company = pgTable("company", {
   name: text("name").notNull(),
   email: text("email"),
   logoUrl: text("logo_url"),
+  taxId: text("tax_id").unique(),
+  phone: text("phone"),
+  website: text("website"),
+  industry: text("industry"),
   createdAt: timestamp("created_at").defaultNow(),
 });

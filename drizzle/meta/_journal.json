@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1753126912691,
-      "tag": "0000_wealthy_aqueduct",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1753242844381,
-      "tag": "0001_natural_ultimatum",
+      "when": 1753489478507,
+      "tag": "0000_freezing_vance_astro",
       "breakpoints": true
     }
   ]
