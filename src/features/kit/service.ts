@@ -12,7 +12,7 @@ export type KitUpdate = Partial<Omit<InferInsertModel<typeof kit>, "id">>;
  */
 export const createKit = async (kitData: KitInsert) => {
   const newKit = await db.insert(kit).values(kitData).returning();
-  return newKit;
+  return newKit[0];
 };
 
 /**
