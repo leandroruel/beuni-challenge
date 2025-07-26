@@ -46,23 +46,19 @@ export const create = async (request: FastifyRequest, reply: FastifyReply) => {
   // Check if taxId is already in use
   const taxId = parseResult.data.taxId;
   if (typeof taxId !== "string") {
-    return reply
-      .status(400)
-      .send({
-        error: "Tax ID is required and must be a string",
-        code: ERROR_CODES.INVALID_TAX_ID,
-      });
+    return reply.status(400).send({
+      error: "Tax ID is required and must be a string",
+      code: ERROR_CODES.INVALID_TAX_ID,
+    });
   }
-  
+
   const existingCompany = await getByTaxId(taxId);
 
   if (existingCompany) {
-    return reply
-      .status(400)
-      .send({
-        error: "Tax ID already exists",
-        code: ERROR_CODES.TAX_ID_EXISTS,
-      });
+    return reply.status(400).send({
+      error: "Tax ID already exists",
+      code: ERROR_CODES.TAX_ID_EXISTS,
+    });
   }
 
   const companyData = parseResult.data;
