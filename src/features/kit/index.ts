@@ -1,4 +1,10 @@
-import { createKit, getAllKits, getKitById, updateKit, deleteKit } from "./service.ts";
+import {
+  createKit,
+  getAllKits,
+  getKitById,
+  updateKit,
+  deleteKit,
+} from "./service.ts";
 import { kitInsertSchema } from "./schema.ts";
 import type { FastifyRequest, FastifyReply } from "fastify";
 
@@ -18,7 +24,12 @@ export const create = async (request: FastifyRequest, reply: FastifyReply) => {
 };
 
 export const update = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { id } = request.params as { id: number };
+  const { id: idParam } = request.params as { id: string };
+  const id = parseInt(idParam, 10);
+
+  if (isNaN(id)) {
+    return reply.status(400).send({ error: "Invalid ID parameter" });
+  }
   const body = request.body;
   const parseResult = kitInsertSchema.safeParse(body);
   if (!parseResult.success) {
@@ -67,4 +78,4 @@ export const destroy = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 
   return reply.send({ message: "Kit deleted successfully", kit: deletedKit });
-}
+};

@@ -8,9 +8,11 @@ import {
   createCompany,
   deleteCompany,
   getAllCompanies,
+  getByTaxId,
   getCompanyById,
   updateCompany,
 } from "./service.ts";
+import { ERROR_CODES } from "../../utils/constants.ts";
 
 export const getAll = async (request: FastifyRequest, reply: FastifyReply) => {
   const companies = await getAllCompanies();
@@ -39,6 +41,28 @@ export const create = async (request: FastifyRequest, reply: FastifyReply) => {
 
   if (!parseResult.success) {
     return reply.status(400).send({ error: parseResult.error.message });
+  }
+
+  // Check if taxId is already in use
+  const taxId = parseResult.data.taxId;
+  if (typeof taxId !== "string") {
+    return reply
+      .status(400)
+      .send({
+        error: "Tax ID is required and must be a string",
+        code: ERROR_CODES.INVALID_TAX_ID,
+      });
+  }
+  
+  const existingCompany = await getByTaxId(taxId);
+
+  if (existingCompany) {
+    return reply
+      .status(400)
+      .send({
+        error: "Tax ID already exists",
+        code: ERROR_CODES.TAX_ID_EXISTS,
+      });
   }
 
   const companyData = parseResult.data;
