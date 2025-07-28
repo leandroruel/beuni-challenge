@@ -5,6 +5,7 @@ import { registerAuthRoutes } from "./features/auth/routes.ts";
 import { registerKitRoutes } from "./features/kit/route.ts";
 import { registerCompanyRoutes } from "./features/company/route.ts";
 import { registerEmployeeRoutes } from "./features/employee/route.ts";
+import { registerPromotionalItemRoutes } from "./features/promotional-item/route.ts";
 
 const fastify = Fastify({ logger: true });
 
@@ -20,6 +21,7 @@ await registerAuthRoutes(fastify);
 await registerKitRoutes(fastify);
 await registerCompanyRoutes(fastify);
 await registerEmployeeRoutes(fastify);
+await registerPromotionalItemRoutes(fastify);
 
 fastify.get("/", async (request, reply) => {
   return { hello: "world" };
