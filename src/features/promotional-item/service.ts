@@ -72,7 +72,6 @@ export const deletePromotionalItem = async (id: number) => {
   return result[0];
 };
 
-
 /**
  * Checks if a promotional item with the given name exists.
  * @param name - The name of the promotional item.

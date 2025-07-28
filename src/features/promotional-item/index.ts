@@ -28,7 +28,12 @@ export const create = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 
   if (await exists(parseResult.data.name)) {
-    return reply.status(400).send({ error: "Promotional item already exists" });
+    return reply
+      .status(400)
+      .send({
+        error: "Promotional item already exists",
+        code: ERROR_CODES.PROMOTIONAL_ITEM_EXISTS,
+      });
   }
 
   const itemData = parseResult.data;
@@ -48,7 +53,9 @@ export const update = async (request: FastifyRequest, reply: FastifyReply) => {
   const id = parseInt(idParam, 10);
 
   if (isNaN(id)) {
-    return reply.status(400).send({ error: "Invalid ID parameter" });
+    return reply
+      .status(400)
+      .send({ error: "Invalid ID parameter", code: ERROR_CODES.INVALID_ID });
   }
 
   const body = request.body;
@@ -63,7 +70,12 @@ export const update = async (request: FastifyRequest, reply: FastifyReply) => {
   const updatedItem = await updatePromotionalItem(id, itemData);
 
   if (!updatedItem) {
-    return reply.status(404).send({ error: "Promotional item not found", code: ERROR_CODES.NOT_FOUND });
+    return reply
+      .status(404)
+      .send({
+        error: "Promotional item not found",
+        code: ERROR_CODES.NOT_FOUND,
+      });
   }
 
   return reply.send(updatedItem);
@@ -99,7 +111,12 @@ export const getById = async (request: FastifyRequest, reply: FastifyReply) => {
   const item = await getPromotionalItemById(id);
 
   if (!item) {
-    return reply.status(404).send({ error: "Promotional item not found" });
+    return reply
+      .status(404)
+      .send({
+        error: "Promotional item not found",
+        code: ERROR_CODES.NOT_FOUND,
+      });
   }
 
   return reply.send(item);
@@ -123,7 +140,12 @@ export const destroy = async (request: FastifyRequest, reply: FastifyReply) => {
   const deletedItem = await deletePromotionalItem(id);
 
   if (!deletedItem) {
-    return reply.status(404).send({ error: "Promotional item not found" });
+    return reply
+      .status(404)
+      .send({
+        error: "Promotional item not found",
+        code: ERROR_CODES.NOT_FOUND,
+      });
   }
 
   return reply.send({
