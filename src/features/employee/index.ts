@@ -93,12 +93,10 @@ export const getById = async (request: FastifyRequest, reply: FastifyReply) => {
   const employee = await getEmployeeById(id);
 
   if (!employee) {
-    return reply
-      .status(404)
-      .send({
-        error: "Employee not found",
-        code: ERROR_CODES.EMPLOYEE_NOT_FOUND,
-      });
+    return reply.status(404).send({
+      error: "Employee not found",
+      code: ERROR_CODES.EMPLOYEE_NOT_FOUND,
+    });
   }
 
   return reply.send(employee);
@@ -130,12 +128,10 @@ export const destroy = async (request: FastifyRequest, reply: FastifyReply) => {
   const deletedEmployee = await deleteEmployee(id);
 
   if (!deletedEmployee) {
-    return reply
-      .status(404)
-      .send({
-        error: "Employee not found",
-        code: ERROR_CODES.EMPLOYEE_NOT_FOUND,
-      });
+    return reply.status(404).send({
+      error: "Employee not found",
+      code: ERROR_CODES.EMPLOYEE_NOT_FOUND,
+    });
   }
 
   return reply.send({
